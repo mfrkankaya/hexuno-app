@@ -7,7 +7,7 @@ export function Text({ className, ...props }: TextProps) {
     <DefaultText
       {...props}
       className={cn(
-        "font-lato-regular text-zinc-950 dark:text-white",
+        "font-lato-regular text-zinc-950 dark:text-white text-base leading-normal",
         className
       )}
     />
