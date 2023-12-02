@@ -3,6 +3,7 @@ import { Text, View } from 'react-native'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth'
 import { auth } from '../../lib/firebase'
+import { Deneme } from '@/components/deneme'
 
 export default function IndexPage() {
   return (
@@ -32,6 +33,7 @@ export default function IndexPage() {
           }}>
           Hello World!
         </Text>
+        <Deneme />
       </View>
     </>
   )
