@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { Slot } from 'expo-router'
-import { onAuthStateChanged } from 'firebase/auth'
-import { auth } from '@/lib/firebase'
-import { router } from 'expo-router'
+import React, { useEffect, useState } from "react"
+import { router, Slot } from "expo-router"
+import { onAuthStateChanged } from "firebase/auth"
+
+import { auth } from "@/lib/firebase"
 
 export default function AppLayout() {
   const [loading, setLoading] = useState(true)
@@ -11,7 +11,7 @@ export default function AppLayout() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setLoading(false)
       if (!user) {
-        router.replace('/auth')
+        router.replace("/auth")
       }
     })
 

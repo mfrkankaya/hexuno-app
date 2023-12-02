@@ -1,23 +1,24 @@
-import React from 'react'
-import { View } from 'react-native'
-import { GoogleSignin } from '@react-native-google-signin/google-signin'
+import React from "react"
+import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import {
   GoogleAuthProvider,
   signInWithCredential,
-  signOut
-} from 'firebase/auth'
-import { Text } from '@/components/ui/text'
-import { auth } from '@/lib/firebase'
+  signOut,
+} from "firebase/auth"
+import { View } from "react-native"
+
+import { auth } from "@/lib/firebase"
+import { Text } from "@/components/ui/text"
 
 export default function IndexPage() {
   return (
     <>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text
           onPress={async () => {
             GoogleSignin.configure({
               webClientId:
-                '863791832999-6950mla0i12ocop4fu2l9d8o1udks5hb.apps.googleusercontent.com'
+                "863791832999-6950mla0i12ocop4fu2l9d8o1udks5hb.apps.googleusercontent.com",
             })
 
             try {
@@ -32,7 +33,8 @@ export default function IndexPage() {
             } catch (error) {
               console.log(error)
             }
-          }}>
+          }}
+        >
           Hello World!
         </Text>
 
@@ -40,7 +42,8 @@ export default function IndexPage() {
           className="p-4"
           onPress={async () => {
             await signOut(auth)
-          }}>
+          }}
+        >
           Sign out
         </Text>
       </View>
