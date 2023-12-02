@@ -6,5 +6,5 @@ export default function Background({
 }: {
   children: React.ReactNode
 }) {
-  return <View style={{ flex: 1, backgroundColor: '#09090b' }}>{children}</View>
+  return <View className="bg-black flex-1">{children}</View>
 }

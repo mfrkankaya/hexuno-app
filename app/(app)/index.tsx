@@ -12,7 +12,7 @@ export default function IndexPage() {
         <View
           style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Text
-            style={{ color: 'red', padding: 20 }}
+            className="text-blue-500 p-10 bg-red-500 rounded-xl"
             onPress={async () => {
               GoogleSignin.configure({
                 webClientId:
