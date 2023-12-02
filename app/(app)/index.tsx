@@ -1,7 +1,11 @@
 import React from 'react'
 import { View } from 'react-native'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
-import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth'
+import {
+  GoogleAuthProvider,
+  signInWithCredential,
+  signOut
+} from 'firebase/auth'
 import { Text } from '@/components/ui/text'
 import { auth } from '@/lib/firebase'
 
@@ -30,6 +34,14 @@ export default function IndexPage() {
             }
           }}>
           Hello World!
+        </Text>
+
+        <Text
+          className="p-4"
+          onPress={async () => {
+            await signOut(auth)
+          }}>
+          Sign out
         </Text>
       </View>
     </>
