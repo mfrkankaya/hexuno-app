@@ -20,6 +20,7 @@ module.exports = {
     "^@/data/(.*)$",
     "^@/components/ui/(.*)$",
     "^@/components/(.*)$",
+    "^@/svg/(.*)$",
     "^@/features/(.*)$",
     "^@/actions/(.*)$",
     "^@/styles/(.*)$",

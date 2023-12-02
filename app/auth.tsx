@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import { TouchableOpacity, View } from "react-native"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import { router } from "expo-router"
 import {
@@ -7,10 +8,10 @@ import {
   signInAnonymously,
   signInWithCredential,
 } from "firebase/auth"
-import { TouchableOpacity, View } from "react-native"
 
 import { auth } from "@/lib/firebase"
 import { Text } from "@/components/ui/text"
+import Logo from "@/svg/Logo.svg"
 
 export default function AuthPage() {
   useEffect(() => {
@@ -48,6 +49,7 @@ export default function AuthPage() {
   return (
     <View className="flex-1 justify-center items-center">
       <View className="px-6 w-full">
+        <Logo width={128} height={128} className="text-zinc-950 mx-auto mb-4" />
         <Text className="text-center font-lato-black text-4xl leading-none">
           HEXUNO
         </Text>
