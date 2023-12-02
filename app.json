@@ -16,18 +16,28 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": false,
+      "bundleIdentifier": "com.mfurkankaya.hexuno"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#09090b"
       },
-      "package": "com.mfurkankaya.hexuno"
+      "package": "com.mfurkankaya.hexuno",
+      "googleServicesFile": "./google-services.json"
     },
     "plugins": [
       "expo-router",
       "@react-native-google-signin/google-signin"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "5422e257-849d-4855-9dd0-0bae86b849b3"
+      }
+    }
   }
 }

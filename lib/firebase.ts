@@ -1,20 +1,21 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
-import { getAuth } from 'firebase/auth'
+import { initializeAuth, getReactNativePersistence } from 'firebase/auth'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDNFDUH1EBqNfiNqywcQDt7PnpDJUSuqKw',
-  authDomain: 'hexuno-d366f.firebaseapp.com',
-  databaseURL:
-    'https://hexuno-d366f-default-rtdb.europe-west1.firebasedatabase.app',
-  projectId: 'hexuno-d366f',
-  storageBucket: 'hexuno-d366f.appspot.com',
-  messagingSenderId: '1051973443520',
-  appId: '1:1051973443520:web:7729ae77e239241ab13225',
-  measurementId: 'G-4MXN7TL0PH'
+  apiKey: 'AIzaSyDhapJsy7ZyenVhRNKoZdYH4oURDSzkfO8',
+  authDomain: 'notes-app-2f036.firebaseapp.com',
+  projectId: 'notes-app-2f036',
+  storageBucket: 'notes-app-2f036.appspot.com',
+  messagingSenderId: '863791832999',
+  appId: '1:863791832999:web:d1e29e1fb784772f326082',
+  measurementId: 'G-1WR5QB73G4'
 }
 
 const app = initializeApp(firebaseConfig)
 
 export const firestore = getFirestore(app)
-export const auth = getAuth(app)
+export const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage)
+})
