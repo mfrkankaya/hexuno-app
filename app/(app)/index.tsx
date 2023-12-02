@@ -1,17 +1,15 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth'
-import { auth } from '../../lib/firebase'
-import { Deneme } from '@/components/deneme'
+import { Text } from '@/components/ui/text'
+import { auth } from '@/lib/firebase'
 
 export default function IndexPage() {
   return (
     <>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text
-          className="text-white text-2xl"
-          style={{ fontFamily: 'Lato_900Black' }}
           onPress={async () => {
             GoogleSignin.configure({
               webClientId:
@@ -33,7 +31,6 @@ export default function IndexPage() {
           }}>
           Hello World!
         </Text>
-        <Deneme />
       </View>
     </>
   )
