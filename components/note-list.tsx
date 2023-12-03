@@ -81,7 +81,7 @@ function NoteListItem({ id, title, content }: INote) {
         >
           <View className="bg-zinc-50 dark:bg-zinc-900 p-5 rounded-xl">
             <Text className="text-xl font-bold mb-1">{title}</Text>
-            <Text>{content}</Text>
+            <Text numberOfLines={1}>{content}</Text>
           </View>
         </TouchableOpacity>
       </Reanimated.View>
