@@ -5,7 +5,7 @@ import { useAtom } from "jotai"
 
 import { INote } from "@/definitions/note"
 import useDisclose from "@/hooks/use-disclose"
-import { activeOptionsNoteIdAtom } from "@/store/atoms"
+import { activeOptionsNoteIdAtom, noteFormSheetAtom } from "@/store/atoms"
 import { deleteNoteById } from "@/api/notes"
 
 import BottomSheet from "./ui/bottom-sheet"
@@ -16,6 +16,7 @@ import { Text } from "./ui/text"
 export default function NoteOptionsSheet() {
   const queryClient = useQueryClient()
   const [activeNoteId, setActiveNoteId] = useAtom(activeOptionsNoteIdAtom)
+  const [, setFormNoteId] = useAtom(noteFormSheetAtom)
   const deleteDisclose = useDisclose()
   const deleteMutation = useMutation({
     mutationFn: deleteNoteById,
@@ -41,7 +42,13 @@ export default function NoteOptionsSheet() {
           </Text>
 
           <View className="space-y-2">
-            <TouchableOpacity className="p-2 px-4 rounded-lg bg-zinc-50 dark:bg-zinc-800">
+            <TouchableOpacity
+              onPress={() => {
+                setActiveNoteId(null)
+                setFormNoteId(activeNoteId!)
+              }}
+              className="p-2 px-4 rounded-lg bg-zinc-50 dark:bg-zinc-800"
+            >
               <Text className="font-lato-bold font-bold text-lg">Edit</Text>
             </TouchableOpacity>
 

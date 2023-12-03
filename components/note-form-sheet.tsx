@@ -1,14 +1,14 @@
-import React, { useRef } from "react"
-import { TextInput, TouchableOpacity, View } from "react-native"
+import React, { useEffect, useRef } from "react"
+import { TextInput, View } from "react-native"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useAtom } from "jotai"
 import { Controller, useForm } from "react-hook-form"
 
 import { INote, INoteData, NoteDataSchema } from "@/definitions/note"
-import { cn } from "@/lib/utils"
 import { noteFormSheetAtom } from "@/store/atoms"
-import { createNote } from "@/api/notes"
+import { useNotes } from "@/store/notes"
+import { createNote, updateNoteById } from "@/api/notes"
 
 import BottomSheet from "./ui/bottom-sheet"
 import { Button } from "./ui/button"
@@ -16,18 +16,21 @@ import Input from "./ui/input"
 import { Text } from "./ui/text"
 
 export default function NoteFormSheet() {
+  const { data: notes } = useNotes()
   const queryClient = useQueryClient()
   const contentInputRef = useRef<TextInput>(null)
-  const [isOpen, setIsOpen] = useAtom(noteFormSheetAtom)
+  const [formNoteId, setFormNoteId] = useAtom(noteFormSheetAtom)
   const { control, reset, handleSubmit } = useForm<INoteData>({
     values: { title: "", content: "" },
     resolver: zodResolver(NoteDataSchema),
   })
 
+  const isEditMode = typeof formNoteId === "string"
+
   const createNoteMutation = useMutation({
     mutationFn: createNote,
     onSuccess: async (data) => {
-      setIsOpen(false)
+      setFormNoteId(false)
       reset({ title: "", content: "" })
       await queryClient.cancelQueries({ queryKey: ["notes"] })
       queryClient.setQueryData(["notes"], (oldData: INote[]) => {
@@ -36,17 +39,50 @@ export default function NoteFormSheet() {
     },
   })
 
+  const updateNoteMutation = useMutation({
+    mutationFn: async ({ id, ...data }: INoteData & { id: string }) =>
+      updateNoteById(id, data),
+    onSuccess: async (data) => {
+      setFormNoteId(false)
+      reset({ title: "", content: "" })
+      await queryClient.cancelQueries({ queryKey: ["notes"] })
+      queryClient.setQueryData(["notes"], (oldData: INote[]) => {
+        return oldData.map((note) => {
+          if (note.id === data.id) return data
+          return note
+        })
+      })
+    },
+  })
+
   function onSubmit() {
     handleSubmit((data) => {
-      createNoteMutation.mutate(data)
+      if (isEditMode) {
+        updateNoteMutation.mutate({ id: formNoteId!, ...data })
+      } else {
+        createNoteMutation.mutate(data)
+      }
     })()
   }
 
+  useEffect(() => {
+    if (typeof formNoteId === "string") {
+      const note = notes?.find((note) => note.id === formNoteId)
+      if (note) {
+        reset({ title: note.title, content: note.content })
+      }
+    }
+
+    if (!formNoteId) {
+      reset({ title: "", content: "" })
+    }
+  }, [formNoteId])
+
   return (
-    <BottomSheet isOpen={!!isOpen} onClose={() => setIsOpen(false)}>
+    <BottomSheet isOpen={!!formNoteId} onClose={() => setFormNoteId(false)}>
       <View className="p-6">
         <Text className="font-lato-black font-black text-2xl mb-6">
-          Create note
+          {isEditMode ? "Edit Note" : "New Note"}
         </Text>
         <Controller
           control={control}
@@ -82,7 +118,9 @@ export default function NoteFormSheet() {
         />
 
         <Button
-          disabled={createNoteMutation.isPending}
+          disabled={
+            createNoteMutation.isPending || updateNoteMutation.isPending
+          }
           text="Save"
           onPress={onSubmit}
           className="mt-3"
