@@ -10,6 +10,7 @@ import { useFonts } from "expo-font"
 import { Slot } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import { Provider as JotaiProvider } from "jotai"
+import { SafeAreaProvider } from "react-native-safe-area-context"
 
 export default function RootLayout() {
   const queryClient = useRef(new QueryClient()).current
@@ -26,10 +27,12 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <JotaiProvider>
-        <View className="bg-white dark:bg-zinc-950 flex-1">
-          <StatusBar backgroundColor="transparent" />
-          <Slot />
-        </View>
+        <SafeAreaProvider className="flex-1">
+          <View className="bg-white dark:bg-zinc-950 flex-1">
+            <StatusBar backgroundColor="transparent" />
+            <Slot />
+          </View>
+        </SafeAreaProvider>
       </JotaiProvider>
     </QueryClientProvider>
   )

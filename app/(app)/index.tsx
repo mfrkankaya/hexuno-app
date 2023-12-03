@@ -1,22 +1,29 @@
 import React from "react"
-import { signOut } from "firebase/auth"
-import { View } from "react-native"
+import { FlatList, View } from "react-native"
 
-import { auth } from "@/lib/firebase"
 import { Text } from "@/components/ui/text"
+
+const ARRAY = Array.from({ length: 1000 }, (_, i) => i)
 
 export default function IndexPage() {
   return (
     <>
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text
-          className="p-4"
-          onPress={async () => {
-            await signOut(auth)
-          }}
-        >
-          Sign out
-        </Text>
+      <View style={{ flex: 1 }}>
+        <FlatList
+          data={ARRAY}
+          keyExtractor={(item) => item.toString()}
+          renderItem={({ item }) => (
+            <View
+              style={{
+                padding: 16,
+                borderBottomWidth: 1,
+                borderBottomColor: "#ccc",
+              }}
+            >
+              <Text>{item}</Text>
+            </View>
+          )}
+        />
       </View>
     </>
   )
