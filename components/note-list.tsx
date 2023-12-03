@@ -1,15 +1,14 @@
-import React, { useMemo, useState } from "react"
+import React, { useMemo } from "react"
 import { Animated, FlatList, TouchableOpacity, View } from "react-native"
 import { filterAndSortNotes } from "@/utils/notes"
+import * as Clipboard from "expo-clipboard"
 import { useAtom, useAtomValue } from "jotai"
 
 import { INote } from "@/definitions/note"
 import useDebounce from "@/hooks/use-debounce"
-import useDisclose from "@/hooks/use-disclose"
 import { activeOptionsNoteIdAtom, searchTextAtom } from "@/store/atoms"
 import { useNotes } from "@/store/notes"
 
-import BottomSheet from "./ui/bottom-sheet"
 import Skeleton from "./ui/skeleton"
 import { Text } from "./ui/text"
 
@@ -66,6 +65,7 @@ function NoteListItem({ id, title, content }: INote) {
       <TouchableOpacity
         className="px-6"
         onLongPress={() => setActiveNoteId(id)}
+        onPress={() => Clipboard.setStringAsync(content)}
       >
         <View className="bg-zinc-50 dark:bg-zinc-900 p-5 rounded-xl">
           <Text className="text-xl font-bold mb-1">{title}</Text>
