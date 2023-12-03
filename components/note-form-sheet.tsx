@@ -1,5 +1,5 @@
 import React, { useRef } from "react"
-import { TextInput, View } from "react-native"
+import { TextInput, TouchableOpacity, View } from "react-native"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useAtom } from "jotai"
 import { Controller, useForm } from "react-hook-form"
@@ -34,7 +34,6 @@ export default function NoteFormSheet() {
               onChangeText={onChange}
               value={value}
               placeholder="Title"
-              autoFocus
               autoCapitalize="words"
               onSubmitEditing={() => contentInputRef.current?.focus()}
               returnKeyType="next"
@@ -58,6 +57,12 @@ export default function NoteFormSheet() {
             />
           )}
         />
+
+        <TouchableOpacity className="bg-zinc-950 mt-3 dark:bg-white p-4 rounded-xl justify-center items-center">
+          <Text className="text-center text-zinc-50 dark:text-zinc-950 font-bold">
+            Save
+          </Text>
+        </TouchableOpacity>
       </View>
     </BottomSheet>
   )

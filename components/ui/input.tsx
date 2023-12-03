@@ -40,7 +40,7 @@ const Input = forwardRef<TextInput, Props>(
           onBlur={handleBlur}
           value={value}
           className={cn(
-            "bg-white/20 rounded-xl h-14 px-4 pt-[29px] pb-[11px] text-base leading-none text-zinc-700 dark:text-zinc-200 font-lato-regular w-full",
+            "bg-zinc-100 dark:bg-white/20 rounded-xl h-14 px-4 pt-[28px] pb-[10px] text-base leading-none text-zinc-700 dark:text-zinc-200 font-lato-regular w-full",
             className
           )}
         />
