@@ -49,7 +49,20 @@ export default function AuthPage() {
   return (
     <View className="flex-1 justify-center items-center">
       <View className="px-6 w-full">
-        <Logo width={128} height={128} className="text-zinc-950 mx-auto mb-4" />
+        <View className="hidden dark:flex mx-auto mb-4">
+        <Logo
+            width={128}
+            height={128}
+            className="text-white"
+          />
+        </View>
+        <View className="dark:hidden mx-auto mb-4">
+          <Logo
+            width={128}
+            height={128}
+            className="text-zinc-950"
+          />
+        </View>
         <Text className="text-center font-lato-black text-4xl leading-none">
           HEXUNO
         </Text>
@@ -60,9 +73,11 @@ export default function AuthPage() {
 
         <TouchableOpacity
           onPress={handleGoogleSignIn}
-          className="w-full items-center justify-center mt-8 h-16 rounded-2xl bg-zinc-950"
+          className="w-full items-center justify-center mt-8 h-16 rounded-2xl bg-zinc-950 dark:bg-white"
         >
-          <Text className="text-white font-bold">Sign in with Google</Text>
+          <Text className="text-white font-bold dark:text-zinc-950">
+            Sign in with Google
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
