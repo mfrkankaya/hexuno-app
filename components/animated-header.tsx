@@ -31,6 +31,11 @@ export function AnimatedHeader({ offset }: { offset: Animated.Value }) {
             outputRange: [32, 0],
             extrapolate: "clamp",
           }),
+          paddingTop: offset.interpolate({
+            inputRange: [0, 50],
+            outputRange: [24, 0],
+            extrapolate: "clamp",
+          }),
         }}
       >
         <Text className="font-lato-black text-zinc-950 dark:text-white font-black text-2xl leading-none">
