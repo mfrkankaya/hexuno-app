@@ -65,9 +65,8 @@ export default function AuthPage() {
         <Text className="text-center font-lato-black text-4xl leading-none">
           HEXUNO
         </Text>
-        <Text className="text-center mt-4">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem
-          dolorem officiis quia nam sapiente sunt eveniet.
+        <Text className="text-center mt-1 opacity-80">
+          Welcome to Hexuno, a simple note-taking app. Sign in to continue.
         </Text>
 
         <Button
