@@ -6,6 +6,7 @@ import { useAtom } from "jotai"
 import { Controller, useForm } from "react-hook-form"
 
 import { INote, INoteData, NoteDataSchema } from "@/definitions/note"
+import { auth } from "@/lib/firebase"
 import { noteFormSheetAtom } from "@/store/atoms"
 import { useNotes } from "@/store/notes"
 import { createNote, updateNoteById } from "@/api/notes"
@@ -32,10 +33,15 @@ export default function NoteFormSheet() {
     onSuccess: async (data) => {
       setFormNoteId(false)
       reset({ title: "", content: "" })
-      await queryClient.cancelQueries({ queryKey: ["notes"] })
-      queryClient.setQueryData(["notes"], (oldData: INote[]) => {
-        return [...oldData, data]
+      await queryClient.cancelQueries({
+        queryKey: ["notes", auth.currentUser?.uid],
       })
+      queryClient.setQueryData(
+        ["notes", auth.currentUser?.uid],
+        (oldData: INote[]) => {
+          return [...oldData, data]
+        }
+      )
     },
   })
 
@@ -45,13 +51,18 @@ export default function NoteFormSheet() {
     onSuccess: async (data) => {
       setFormNoteId(false)
       reset({ title: "", content: "" })
-      await queryClient.cancelQueries({ queryKey: ["notes"] })
-      queryClient.setQueryData(["notes"], (oldData: INote[]) => {
-        return oldData.map((note) => {
-          if (note.id === data.id) return data
-          return note
-        })
+      await queryClient.cancelQueries({
+        queryKey: ["notes", auth.currentUser?.uid],
       })
+      queryClient.setQueryData(
+        ["notes", auth.currentUser?.uid],
+        (oldData: INote[]) => {
+          return oldData.map((note) => {
+            if (note.id === data.id) return data
+            return note
+          })
+        }
+      )
     },
   })
 

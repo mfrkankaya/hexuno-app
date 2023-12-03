@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useAtom } from "jotai"
 
 import { INote } from "@/definitions/note"
+import { auth } from "@/lib/firebase"
 import useDisclose from "@/hooks/use-disclose"
 import { activeOptionsNoteIdAtom, noteFormSheetAtom } from "@/store/atoms"
 import { deleteNoteById } from "@/api/notes"
@@ -23,10 +24,15 @@ export default function NoteOptionsSheet() {
     onSuccess: async (_, id) => {
       deleteDisclose.onClose()
       setActiveNoteId(null)
-      await queryClient.cancelQueries({ queryKey: ["notes"] })
-      queryClient.setQueryData(["notes"], (oldData: INote[]) => {
-        return oldData.filter((note) => note.id !== id)
+      await queryClient.cancelQueries({
+        queryKey: ["notes", auth.currentUser?.uid],
       })
+      queryClient.setQueryData(
+        ["notes", auth.currentUser?.uid],
+        (oldData: INote[]) => {
+          return oldData.filter((note) => note.id !== id)
+        }
+      )
     },
   })
 

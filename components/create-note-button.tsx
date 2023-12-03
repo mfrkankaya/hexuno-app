@@ -17,7 +17,7 @@ export default function CreateNoteButton() {
         <FontAwesome5 name="plus" size={32} color="white" />
       </View>
       <View className="hidden dark:flex">
-        <FontAwesome5 name="plus" size={32} color="black" />
+        <FontAwesome5 name="plus" size={32} color="#09090b" />
       </View>
     </TouchableOpacity>
   )

@@ -6,3 +6,5 @@ export const searchTextAtom = atom<string>("")
 export const noteFormSheetAtom = atom<boolean | string>(false)
 
 export const activeOptionsNoteIdAtom = atom<string | null>(null)
+
+export const settingsSheetAtom = atom<boolean>(false)
