@@ -28,12 +28,12 @@ export function AnimatedHeader({ offset }: { offset: Animated.Value }) {
           }),
           height: offset.interpolate({
             inputRange: [0, 50],
-            outputRange: [32, 0],
+            outputRange: [48, 0],
             extrapolate: "clamp",
           }),
           paddingTop: offset.interpolate({
             inputRange: [0, 50],
-            outputRange: [24, 0],
+            outputRange: [16, 0],
             extrapolate: "clamp",
           }),
         }}
