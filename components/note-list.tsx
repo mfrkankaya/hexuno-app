@@ -42,6 +42,18 @@ export default function NoteList({ offset }: { offset: Animated.Value }) {
       />
     )
 
+  if (data.length === 0)
+    return (
+      <View className="flex-1 px-6 justify-center items-center">
+        <Text className="text-2xl font-bold font-lato-bold">
+          No notes found
+        </Text>
+        <Text className="topaciy-80">
+          Add a new note to get started
+        </Text>
+      </View>
+    )
+
   return (
     <FlatList
       contentContainerStyle={{ paddingBottom: 64 }}
