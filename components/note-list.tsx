@@ -3,6 +3,7 @@ import { Animated, FlatList, TouchableOpacity, View } from "react-native"
 import { filterAndSortNotes } from "@/utils/notes"
 import * as Clipboard from "expo-clipboard"
 import { useAtom, useAtomValue } from "jotai"
+import Reanimated, { FadeInRight, FadeOutRight } from "react-native-reanimated"
 
 import { INote } from "@/definitions/note"
 import useDebounce from "@/hooks/use-debounce"
@@ -23,7 +24,7 @@ export default function NoteList({ offset }: { offset: Animated.Value }) {
 
   if (notes.isLoading)
     return (
-      <FlatList
+      <Reanimated.FlatList
         className="px-6"
         contentContainerStyle={{ paddingBottom: 64 }}
         data={Array.from({ length: 100 })}
@@ -48,9 +49,7 @@ export default function NoteList({ offset }: { offset: Animated.Value }) {
         <Text className="text-2xl font-bold font-lato-bold">
           No notes found
         </Text>
-        <Text className="topaciy-80">
-          Add a new note to get started
-        </Text>
+        <Text className="topaciy-80">Add a new note to get started</Text>
       </View>
     )
 
@@ -74,16 +73,18 @@ function NoteListItem({ id, title, content }: INote) {
 
   return (
     <>
-      <TouchableOpacity
-        className="px-6"
-        onLongPress={() => setActiveNoteId(id)}
-        onPress={() => Clipboard.setStringAsync(content)}
-      >
-        <View className="bg-zinc-50 dark:bg-zinc-900 p-5 rounded-xl">
-          <Text className="text-xl font-bold mb-1">{title}</Text>
-          <Text>{content}</Text>
-        </View>
-      </TouchableOpacity>
+      <Reanimated.View entering={FadeInRight} exiting={FadeOutRight}>
+        <TouchableOpacity
+          className="px-6"
+          onLongPress={() => setActiveNoteId(id)}
+          onPress={() => Clipboard.setStringAsync(content)}
+        >
+          <View className="bg-zinc-50 dark:bg-zinc-900 p-5 rounded-xl">
+            <Text className="text-xl font-bold mb-1">{title}</Text>
+            <Text>{content}</Text>
+          </View>
+        </TouchableOpacity>
+      </Reanimated.View>
     </>
   )
 }
