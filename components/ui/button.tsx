@@ -15,7 +15,9 @@ const buttonStyle = cva("w-full justify-center items-center relative", {
   variants: {
     variant: {
       primary: "bg-zinc-950 dark:bg-white",
+      secondary: "bg-zinc-50 dark:bg-zinc-800",
       ghost: "",
+      destructive: "bg-red-500",
     },
     size: {
       sm: "h-6 rounded-md",
@@ -29,11 +31,13 @@ const buttonStyle = cva("w-full justify-center items-center relative", {
   },
 })
 
-const buttonTextStyle = cva("text-center", {
+const buttonTextStyle = cva("text-center font-bold font-lato-bold", {
   variants: {
     variant: {
-      primary: "text-white dark:text-zinc-950 font-bold font-lato-bold",
+      primary: "text-white dark:text-zinc-950",
+      secondary: "text-zinc-950 dark:text-white",
       ghost: "text-zinc-950 dark:text-white font-normal font-lato-regular",
+      destructive: "text-white",
     },
     size: {
       sm: "text-sm",

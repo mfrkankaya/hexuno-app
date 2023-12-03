@@ -7,9 +7,8 @@ interface Props {
   children?: React.ReactNode
 }
 
-export default function BottomSheet({ isOpen, onClose, children }: Props) {
+export default function Dialog({ isOpen, onClose, children }: Props) {
   const animValue = useRef(new Animated.Value(0)).current
-  const [sheetHeight, setSheetHeight] = useState(0)
   const [isOpenLocal, setIsOpenLocal] = useState(isOpen)
 
   const open = useCallback(() => {
@@ -64,34 +63,41 @@ export default function BottomSheet({ isOpen, onClose, children }: Props) {
 
   return (
     <>
-      <Animated.View
-        className="absolute top-0 left-0 right-0 bottom-0 bg-black/50 z-30"
-        style={{
-          opacity: animValue.interpolate({
-            inputRange: [0, 1],
-            outputRange: [0, 1],
-          }),
-        }}
-      >
-        <Pressable className="w-full h-full" onPress={onClose} />
-      </Animated.View>
+      <View className="absolute top-0 left-0 right-0 bottom-0 items-center justify-center z-50">
+        <Animated.View
+          className="absolute top-0 left-0 right-0 bottom-0 bg-black/50 z-50"
+          style={{
+            opacity: animValue.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0, 1],
+            }),
+          }}
+        >
+          <Pressable className="w-full h-full" onPress={onClose} />
+        </Animated.View>
 
-      <Animated.View
-        onLayout={(e) => setSheetHeight(e.nativeEvent.layout.height)}
-        style={{
-          transform: [
-            {
-              translateY: animValue.interpolate({
+        <View className="px-6 absolute w-full">
+          <Animated.View
+            style={{
+              opacity: animValue.interpolate({
                 inputRange: [0, 1],
-                outputRange: [sheetHeight, 0],
+                outputRange: [0, 1],
               }),
-            },
-          ],
-        }}
-        className="absolute bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 rounded-t-2xl z-40"
-      >
-        {children}
-      </Animated.View>
+              transform: [
+                {
+                  translateY: animValue.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [20, 0],
+                  }),
+                },
+              ],
+            }}
+            className="bg-white dark:bg-zinc-900 rounded-xl z-50 w-full"
+          >
+            {children}
+          </Animated.View>
+        </View>
+      </View>
     </>
   )
 }
