@@ -2,6 +2,8 @@ import React from "react"
 import { Animated, View } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
+import SearchBar from "./search-bar"
+
 export function AnimatedHeader({ offset }: { offset: Animated.Value }) {
   const insets = useSafeAreaInsets()
   const titleFontSize = offset.interpolate({
@@ -31,7 +33,7 @@ export function AnimatedHeader({ offset }: { offset: Animated.Value }) {
       >
         My notes
       </Animated.Text>
-      <View className="bg-zinc-50 dark:bg-zinc-900  rounded-xl h-10 w-full my-3"></View>
+      <SearchBar />
     </Animated.View>
   )
 }
