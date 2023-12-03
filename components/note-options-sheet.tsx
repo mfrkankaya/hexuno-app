@@ -49,14 +49,14 @@ export default function NoteOptionsSheet() {
               }}
               className="p-2 px-4 rounded-lg bg-zinc-50 dark:bg-zinc-800"
             >
-              <Text className="font-lato-bold font-bold text-lg">Edit</Text>
+              <Text className="font-bold font-lato-bold">Edit</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               onPress={deleteDisclose.onOpen}
               className="p-2 px-4 rounded-lg bg-zinc-50 dark:bg-zinc-800"
             >
-              <Text className="font-lato-bold font-bold text-lg text-red-500">
+              <Text className="font-bold font-lato-bold text-red-500">
                 Delete
               </Text>
             </TouchableOpacity>
