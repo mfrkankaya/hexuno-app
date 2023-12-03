@@ -24,7 +24,8 @@ export default function SettingsSheet() {
           <TouchableOpacity
             onPress={async () => {
               try {
-                await GoogleSignin.revokeAccess()
+                const isSignedIn = await GoogleSignin.isSignedIn()
+                if (isSignedIn) await GoogleSignin.revokeAccess()
               } catch (error) {
                 console.log(error)
               }
