@@ -41,12 +41,12 @@ export default function BottomSheet({ isOpen, onClose, children }: Props) {
   }, [isOpen])
 
   useEffect(() => {
-    if (isOpenLocal) {
+    if (isOpen) {
       open()
     } else {
       close()
     }
-  }, [isOpenLocal])
+  }, [isOpen])
 
   useEffect(() => {
     const listener = BackHandler.addEventListener("hardwareBackPress", () => {
@@ -65,7 +65,7 @@ export default function BottomSheet({ isOpen, onClose, children }: Props) {
   return (
     <>
       <Animated.View
-        className="absolute top-0 left-0 right-0 bottom-0 bg-black/50 z-10"
+        className="absolute top-0 left-0 right-0 bottom-0 bg-black/50 z-30"
         style={{
           opacity: animValue.interpolate({
             inputRange: [0, 1],
@@ -89,7 +89,7 @@ export default function BottomSheet({ isOpen, onClose, children }: Props) {
             },
           ],
         }}
-        className="absolute bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 rounded-t-2xl z-20"
+        className="absolute bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 rounded-t-2xl z-40"
       >
         {children}
       </Animated.View>

@@ -12,6 +12,7 @@ import {
 
 import { auth } from "@/lib/firebase"
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 import { Text } from "@/components/ui/text"
 import Logo from "@/svg/Logo.svg"
 
@@ -60,6 +61,7 @@ export default function AuthPage() {
         <View className="dark:hidden mx-auto mb-4">
           <Logo width={128} height={128} className="text-zinc-950" />
         </View>
+
         <Text className="text-center font-lato-black text-4xl leading-none">
           HEXUNO
         </Text>
@@ -68,30 +70,21 @@ export default function AuthPage() {
           dolorem officiis quia nam sapiente sunt eveniet.
         </Text>
 
-        <TouchableOpacity
-          onPress={() => googleSignInMutation.mutate()}
+        <Button
           disabled={isPending}
-          className={cn(
-            "w-full items-center justify-center mt-8 h-16 rounded-2xl bg-zinc-950 dark:bg-white",
-            {
-              "opacity-50": isPending,
-            }
-          )}
-        >
-          <Text className="text-white font-bold dark:text-zinc-950">
-            Sign in with Google
-          </Text>
-        </TouchableOpacity>
+          onPress={() => googleSignInMutation.mutate()}
+          text="Sign in with Google"
+          size="lg"
+          className="mt-8"
+        />
 
-        <TouchableOpacity
+        <Button
+          text="Continue Anonymously"
+          variant="ghost"
           onPress={() => anonymousSignInMutation.mutate()}
           disabled={isPending}
-          className={cn("mt-2 w-fit mx-auto p-2", {
-            "opacity-50": isPending,
-          })}
-        >
-          <Text>Continue anonymously</Text>
-        </TouchableOpacity>
+          className="mt-2"
+        />
       </View>
     </View>
   )

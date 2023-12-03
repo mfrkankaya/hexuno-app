@@ -13,7 +13,7 @@ export function AnimatedHeader({ offset }: { offset: Animated.Value }) {
   })
 
   const titleOpacity = offset.interpolate({
-    inputRange: [0, 50],
+    inputRange: [0, 25],
     outputRange: [1, 0],
     extrapolate: "clamp",
   })
@@ -29,6 +29,7 @@ export function AnimatedHeader({ offset }: { offset: Animated.Value }) {
           fontSize: titleFontSize,
           lineHeight: titleFontSize,
           opacity: titleOpacity,
+          paddingTop: titleFontSize,
         }}
       >
         My notes

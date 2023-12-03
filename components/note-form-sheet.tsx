@@ -1,23 +1,46 @@
 import React, { useRef } from "react"
 import { TextInput, TouchableOpacity, View } from "react-native"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useAtom } from "jotai"
 import { Controller, useForm } from "react-hook-form"
 
-import { INoteData, NoteDataSchema } from "@/definitions/note"
+import { INote, INoteData, NoteDataSchema } from "@/definitions/note"
+import { cn } from "@/lib/utils"
 import { noteFormSheetAtom } from "@/store/atoms"
+import { createNote } from "@/api/notes"
 
 import BottomSheet from "./ui/bottom-sheet"
+import { Button } from "./ui/button"
 import Input from "./ui/input"
 import { Text } from "./ui/text"
 
 export default function NoteFormSheet() {
+  const queryClient = useQueryClient()
   const contentInputRef = useRef<TextInput>(null)
   const [isOpen, setIsOpen] = useAtom(noteFormSheetAtom)
-  const { control } = useForm<INoteData>({
+  const { control, reset, handleSubmit } = useForm<INoteData>({
     values: { title: "", content: "" },
     resolver: zodResolver(NoteDataSchema),
   })
+
+  const createNoteMutation = useMutation({
+    mutationFn: createNote,
+    onSuccess: async (data) => {
+      setIsOpen(false)
+      reset({ title: "", content: "" })
+      await queryClient.cancelQueries({ queryKey: ["notes"] })
+      queryClient.setQueryData(["notes"], (oldData: INote[]) => {
+        return [...oldData, data]
+      })
+    },
+  })
+
+  function onSubmit() {
+    handleSubmit((data) => {
+      createNoteMutation.mutate(data)
+    })()
+  }
 
   return (
     <BottomSheet isOpen={!!isOpen} onClose={() => setIsOpen(false)}>
@@ -58,11 +81,13 @@ export default function NoteFormSheet() {
           )}
         />
 
-        <TouchableOpacity className="bg-zinc-950 mt-3 dark:bg-white p-4 rounded-xl justify-center items-center">
-          <Text className="text-center text-zinc-50 dark:text-zinc-950 font-bold">
-            Save
-          </Text>
-        </TouchableOpacity>
+        <Button
+          disabled={createNoteMutation.isPending}
+          text="Save"
+          onPress={onSubmit}
+          className="mt-3"
+          size="lg"
+        />
       </View>
     </BottomSheet>
   )

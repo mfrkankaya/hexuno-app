@@ -6,3 +6,9 @@ export const NoteDataSchema = z.object({
 })
 
 export type INoteData = z.infer<typeof NoteDataSchema>
+
+export type INote = INoteData & {
+  id: string
+  userId: string
+  updatedAt: number
+}
